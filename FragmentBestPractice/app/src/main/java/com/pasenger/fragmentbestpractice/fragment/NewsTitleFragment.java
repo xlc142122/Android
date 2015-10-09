@@ -60,10 +60,12 @@ public class NewsTitleFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 News news = newsList.get(position);
                 if (isTwoPane) {
+                    //双页模式,刷新NewsContentFragment的内容
                     NewsContentFragment newsContentFragment = (NewsContentFragment) getFragmentManager().findFragmentById(R.id.news_content_fragment);
 
                     newsContentFragment.refresh(news.getTitle(), news.getContent());
                 } else {
+                    //单页模式,启动NewsContentActivity
                     NewsContentActivity.actionStart(getActivity(), news.getTitle(), news.getContent());
                 }
             }
@@ -78,6 +80,7 @@ public class NewsTitleFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        //根据是否加载了大屏layout判断是否未双页模式
         if (getActivity().findViewById(R.id.news_content_layout) != null) {
             isTwoPane = true;
         } else {
